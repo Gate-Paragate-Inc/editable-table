@@ -70,8 +70,15 @@ $.fn.editableTableWidget = function (options) {
 				editor.hide();
 				active.focus();
 			} else if (e.which === TAB) {
-				active.focus();
-			} else if (this.selectionEnd - this.selectionStart === this.value.length) {
+		            e.preventDefault();
+		            e.stopPropagation();
+		
+		            if (active.next('td').length == 0) {
+		                active.closest('tr').next().find('td:first-child').focus().click();
+		            } else {
+		                active.next('td').focus().click();
+		            }
+		        } else if (this.selectionEnd - this.selectionStart === this.value.length) {
 				var possibleMove = movement(active, e.which);
 				if (possibleMove.length > 0) {
 					possibleMove.focus();
